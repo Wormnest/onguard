@@ -1532,7 +1532,7 @@ begin
   if IsDaysCodeValid(Key, Code) then begin
     if IsDaysCodeExpired(Key, Code) then begin
       Result := ogDayCountUsed;
-      if GetExpirationDate(Key, Code) < Date then
+      if GetExpirationDate(Key, Code) < SysUtils.Date then
         Result := ogCodeExpired;
     end;
   end else
@@ -1781,7 +1781,7 @@ begin
   ApplyModifierToKeyPrim(Modifier, Key, SizeOf(Key));
   if not IsRegCodeValid(Key, Code) then
     Result := ogInvalidCode
-  else if GetExpirationDate(Key, Code) < Date then
+  else if GetExpirationDate(Key, Code) < SysUtils.Date then
     Result := ogCodeExpired;
 
   if Report then
@@ -1823,7 +1823,7 @@ begin
   ApplyModifierToKeyPrim(Modifier, Key, SizeOf(Key));
   if not IsSerialNumberCodeValid(Key, Code) then
     Result := ogInvalidCode
-  else if GetExpirationDate(Key, Code) < Date then
+  else if GetExpirationDate(Key, Code) < SysUtils.Date then
     Result := ogCodeExpired;
 
   if Report then
@@ -1862,7 +1862,7 @@ begin
   ApplyModifierToKeyPrim(Modifier, Key, SizeOf(Key));
   if not IsSpecialCodeValid(Key, Code) then
     Result := ogInvalidCode
-  else if GetExpirationDate(Key, Code) < Date then
+  else if GetExpirationDate(Key, Code) < SysUtils.Date then
     Result := ogCodeExpired;
 
   if Report then
@@ -1902,7 +1902,7 @@ begin
   if IsUsageCodeValid(Key, Code) then begin
     if IsUsageCodeExpired(Key, Code) then begin
       Result := ogRunCountUsed;
-      if GetExpirationDate(Key, Code) < Date then
+      if GetExpirationDate(Key, Code) < SysUtils.Date then
         Result := ogCodeExpired;
     end;
   end else
@@ -2042,7 +2042,7 @@ begin
   Work := Code;
   MixBlock(T128bit(Key), Work, False);
   Result := (Work.CheckValue = DateCheckCode) and
-            (ExpandDate(Work.FirstDate) <= Date);
+            (ExpandDate(Work.FirstDate) <= SysUtils.Date);
 end;
 
 function GetDateCodeValue(const Key : TKey; const Code : TCode) : TDateTime;
@@ -2053,7 +2053,7 @@ begin
   MixBlock(T128bit(Key), Work, False);
   {return the end date}
   if (Work.CheckValue = DateCheckCode) and
-     (ExpandDate(Work.FirstDate) <= Date) then
+     (ExpandDate(Work.FirstDate) <= SysUtils.Date) then
     Result := ExpandDate(Work.EndDate)
   else
     Result := 0;
@@ -2061,7 +2061,7 @@ end;
 
 function IsDateCodeExpired(const Key : TKey; const Code : TCode) : Boolean;
 begin
-  Result := (GetDateCodeValue(Key, Code) < Date);
+  Result := (GetDateCodeValue(Key, Code) < SysUtils.Date);
 end;
 
 
@@ -2073,7 +2073,7 @@ begin
   Code.CheckValue := DaysCheckCode;
   Code.Expiration := ShrinkDate(Expires);
   Code.Days := Days;
-  Code.LastAccess := ShrinkDate(Date);
+  Code.LastAccess := ShrinkDate(SysUtils.Date);
   MixBlock(T128bit(Key), Code, True);
 end;
 
@@ -2084,7 +2084,7 @@ begin
   Work := Code;
   MixBlock(T128bit(Key), Work, False);
   Result := (Work.CheckValue = DaysCheckCode) and
-            (ExpandDate(Work.LastAccess) <= Date);
+            (ExpandDate(Work.LastAccess) <= SysUtils.Date);
 end;
 
 procedure DecDaysCode(const Key : TKey; var Code : TCode);
@@ -2092,7 +2092,7 @@ var
   X : LongInt;
 begin
   MixBlock(T128bit(Key), Code, False);
-  X := ShrinkDate(Date);
+  X := ShrinkDate(SysUtils.Date);
   if (Code.LastAccess <> X) then begin
     if Code.Days > 0 then                                              {!!.02}
       Code.Days := Max(0, Code.Days - 1);                              {!!.02}
@@ -2108,7 +2108,7 @@ begin
   Work := Code;
   MixBlock(T128bit(Key), Work, False);
   if (Work.CheckValue = DaysCheckCode) and
-     (ExpandDate(Work.LastAccess) <= Date) then
+     (ExpandDate(Work.LastAccess) <= SysUtils.Date) then
     Result := Work.Days
   else
     Result := 0;
@@ -2120,7 +2120,7 @@ var
 begin
   Work := Code;
   MixBlock(T128bit(Key), Work, False);
-  Result := (Work.Days = 0) or (ExpandDate(Work.Expiration) < Date);
+  Result := (Work.Days = 0) or (ExpandDate(Work.Expiration) < SysUtils.Date);
 end;
 
 
@@ -2157,7 +2157,7 @@ var
 begin
   Work := Code;
   MixBlock(T128bit(Key), Work, False);
-  Result := ExpandDate(Work.Expiration) < Date;
+  Result := ExpandDate(Work.Expiration) < SysUtils.Date;
 end;
 
 
@@ -2198,7 +2198,7 @@ var
 begin
   Work := Code;
   MixBlock(T128bit(Key), Work, False);
-  Result := ExpandDate(Work.Expiration) < Date;
+  Result := ExpandDate(Work.Expiration) < SysUtils.Date;
 end;
 
 
@@ -2239,7 +2239,7 @@ var
 begin
   Work := Code;
   MixBlock(T128bit(Key), Work, False);
-  Result := ExpandDate(Work.Expiration) < Date;
+  Result := ExpandDate(Work.Expiration) < SysUtils.Date;
 end;
 
 
@@ -2250,7 +2250,7 @@ begin
   Code.CheckValue := UsageCheckCode;
   Code.Expiration := ShrinkDate(Expires);
   Code.UsageCount := Count;
-  Code.LastChange := ShrinkDate(Date);                                 {!!.02}
+  Code.LastChange := ShrinkDate(SysUtils.Date);                                 {!!.02}
   MixBlock(T128bit(Key), Code, True);
 end;
 
@@ -2261,7 +2261,7 @@ begin
   Work := Code;
   MixBlock(T128bit(Key), Work, False);
   Result := (Work.CheckValue = UsageCheckCode) and                     {!!.02}
-            (ExpandDate(Work.LastChange) <= Date);                     {!!.02}
+            (ExpandDate(Work.LastChange) <= SysUtils.Date);                     {!!.02}
 end;
 
 procedure DecUsageCode(const Key : TKey; var Code : TCode);
@@ -2269,7 +2269,7 @@ var                                                                    {!!.02}
   D : Word;                                                            {!!.02}
 begin
   MixBlock(T128bit(Key), Code, False);
-  D := ShrinkDate(Date);                                               {!!.02}
+  D := ShrinkDate(SysUtils.Date);                                               {!!.02}
   if Code.UsageCount > 0 then                                          {!!.02}
     Code.UsageCount := Max(0, Code.UsageCount - 1);                    {!!.02}
   if (Code.LastChange < D) then                                        {!!.02}
@@ -2285,7 +2285,7 @@ begin
   Work := Code;
   MixBlock(T128bit(Key), Work, False);
   if (Work.CheckValue = UsageCheckCode) and                            {!!.02}
-     (ExpandDate(Work.LastChange) <= Date) then                        {!!.02}
+     (ExpandDate(Work.LastChange) <= SysUtils.Date) then                        {!!.02}
     Result := Work.UsageCount                                          {!!.02}
   else
     Result := 0;
@@ -2297,7 +2297,7 @@ var
 begin
   Work := Code;
   MixBlock(T128bit(Key), Work, False);
-  Result := (Work.UsageCount = 0) or (ExpandDate(Work.Expiration) < Date);
+  Result := (Work.UsageCount = 0) or (ExpandDate(Work.Expiration) < SysUtils.Date);
 end;
 
 (*

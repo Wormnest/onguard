@@ -52,8 +52,9 @@ interface
 
 uses
   {$IFDEF Win32} Windows, ComCtrls, {$ELSE} WinTypes, WinProcs, {$ENDIF}
-  SysUtils, Classes, Graphics, Controls, Forms, Dialogs, Mask,
-  ExtCtrls, Tabnotbk, StdCtrls, Buttons, Messages,
+  SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  {$IFNDEF FPC}Mask,{$ELSE}MaskEdit,{$ENDIF}
+  ExtCtrls, StdCtrls, Buttons, Messages,
   OgConst,
   OgNetWrk,
   OgUtil,
@@ -70,51 +71,58 @@ type
     RegCodeCopySb: TSpeedButton;
     GenerateBtn: TButton;
     RegCodeEd: TEdit;
-    CodesNbk: TTabbedNotebook;
-    Label6: TLabel;
-    RegStrEd: TEdit;
-    RegStrCopySb: TSpeedButton;
-    RegRandomBtn: TButton;
-    Label7: TLabel;
-    SerialNumberEd: TEdit;
-    SerRandomBtn: TButton;
-    Label9: TLabel;
-    Label10: TLabel;
-    NetworkSlotsEd: TEdit;
-    Label11: TLabel;
-    UsageCountEd: TEdit;
-    DaysCountEd: TEdit;
-    SpecialDataEd: TEdit;
-    Label12: TLabel;
-    Label13: TLabel;
-    Label14: TLabel;
     OKBtn: TBitBtn;
     CancelBtn: TBitBtn;
-    StartDateEd: TEdit;
-    EndDateEd: TEdit;
     GroupBox1: TGroupBox;
     UniqueModifierCb: TCheckBox;
     MachineModifierCb: TCheckBox;
     DateModifierCb: TCheckBox;
     NoModifierCb: TCheckBox;
     ModifierEd: TEdit;
-    Label2: TLabel;
-    Label4: TLabel;
-    Label15: TLabel;
-    Label17: TLabel;
-    Label19: TLabel;
-    UsageExpiresEd: TEdit;
-    SpecialExpiresEd: TEdit;
-    SerialExpiresEd: TEdit;
-    RegExpiresEd: TEdit;
-    DaysExpiresEd: TEdit;
     ModDateEd: TEdit;
     Label5: TLabel;
     BlockKeyEd: TEdit;
     GenerateKeySb: TSpeedButton;
     Label1: TLabel;
     StringModifierCb: TCheckBox;                                     {!!.11}
-    ModStringEd: TEdit;                                              {!!.11}
+    ModStringEd: TEdit;
+    CodesNbk: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    TabSheet5: TTabSheet;
+    TabSheet6: TTabSheet;
+    TabSheet7: TTabSheet;
+    Label9: TLabel;
+    StartDateEd: TEdit;
+    Label11: TLabel;
+    EndDateEd: TEdit;
+    Label13: TLabel;
+    DaysCountEd: TEdit;
+    Label2: TLabel;
+    DaysExpiresEd: TEdit;
+    Label6: TLabel;
+    RegStrEd: TEdit;
+    RegStrCopySb: TSpeedButton;
+    RegRandomBtn: TButton;
+    Label4: TLabel;
+    RegExpiresEd: TEdit;
+    Label7: TLabel;
+    SerialNumberEd: TEdit;
+    Label15: TLabel;
+    SerialExpiresEd: TEdit;
+    SerRandomBtn: TButton;
+    Label14: TLabel;
+    UsageCountEd: TEdit;
+    Label17: TLabel;
+    UsageExpiresEd: TEdit;
+    Label10: TLabel;
+    NetworkSlotsEd: TEdit;
+    Label12: TLabel;
+    SpecialDataEd: TEdit;
+    Label19: TLabel;
+    SpecialExpiresEd: TEdit;                                              {!!.11}
     procedure FormCreate(Sender: TObject);
     procedure ModifierClick(Sender: TObject);
     procedure RegRandomBtnClick(Sender: TObject);
@@ -131,6 +139,7 @@ type
     procedure NumberEdKeyPress(Sender: TObject; var Key: Char);
     procedure InfoChanged(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure CodesNbkChange(Sender: TObject);
   private
     { Private declarations }
     FCode        : TCode;
@@ -523,6 +532,13 @@ begin
   ModifierEd.Text := '';
 end;
 
+procedure TCodeGenerateFrm.CodesNbkChange(Sender: TObject);
+begin
+  RegCodeEd.Text := '';
+  NoModifierCb.Checked := True;
+  ModifierEd.Text := '';
+end;
+
 procedure TCodeGenerateFrm.GenerateKeySbClick(Sender: TObject);
 var
   F    : TKeyMaintFrm;
@@ -610,5 +626,6 @@ procedure TCodeGenerateFrm.GetKey(var Value : TKey);
 begin
   Value := FKey;
 end;
+
 
 end.

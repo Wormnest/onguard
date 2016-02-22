@@ -409,9 +409,11 @@ var
   Buf : array[0..255] of Char;
 begin
   StrPLCopy(Buf, ResourceName, SizeOf(Buf)-1);
+  {$IFNDEF FPC}
   {$IFDEF VERSION3}  { resource DLL mechanism started in D3 }
   {if not ModuleIsPackage then }                                                        {!!.04}
   Instance := FindResourceHInstance(Instance);  { get loaded Resource DLL if any }
+  {$ENDIF}
   {$ENDIF}
   H := FindResource(Instance, Buf, RT_RCDATA);  { attempt to load resource }
   if H = 0 then begin  { not found }

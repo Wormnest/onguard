@@ -62,6 +62,9 @@ procedure ActivateFirstInstance;
 
 implementation
 
+{$IFDEF FPC}
+uses InterfaceBase;
+{$ENDIF}
 
 {$IFDEF Win32}
 var
@@ -89,13 +92,22 @@ var
   ThreadID  : DWord;                                                 {!!.07}
 begin
   if IsFirstInstance then begin
+    {$IFNDEF FPC}
     if IsIconic(Application.Handle) then
+    {$ELSE}
+    if IsIconic(WidgetSet.AppHandle) then
+    {$ENDIF}
       Application.Restore
     else
       Application.BringToFront;
   end else begin
+    {$IFNDEF FPC}
     GetClassName(Application.Handle, ClassBuf, SizeOf(ClassBuf));
     GetWindowText(Application.Handle, WindowBuf, SizeOf(WindowBuf));
+    {$ELSE}
+    GetClassName(WidgetSet.AppHandle, ClassBuf, SizeOf(ClassBuf));
+    GetWindowText(WidgetSet.AppHandle, WindowBuf, SizeOf(WindowBuf));
+    {$ENDIF}
     Wnd := FindWindow(ClassBuf, WindowBuf);
     if (Wnd <> 0) then begin
       GetWindowThreadProcessId(Wnd, @ThreadID);
@@ -175,7 +187,11 @@ function GetMutexName : string;
 var
   WindowBuf : array [0..512] of AnsiChar;
 begin
+  {$IFNDEF FPC}
   GetWindowText(Application.Handle, WindowBuf, SizeOf(WindowBuf));
+  {$ELSE}
+  GetWindowText(WidgetSet.AppHandle, WindowBuf, SizeOf(WindowBuf));
+  {$ENDIF}
   Result := 'PREVINST:' + WindowBuf;
 end;
 

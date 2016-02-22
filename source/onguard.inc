@@ -101,6 +101,11 @@
   {$ENDIF}
 {$ENDIF}
 
+{$IFDEF FPC}
+  {$DEFINE VERSION6}          { Version 6 or greater }
+  {$DEFINE VERSION7}
+{$ENDIF}
+
 {$Q-} {Overflow Checking}
 {$R-} {Range-Checking}
 {$S-} {Stack-Overflow Checking}
