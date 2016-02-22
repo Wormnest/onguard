@@ -1,0 +1,17 @@
+syntax: glob
+
+**bin
+**lib
+
+**.~*
+**bak
+**.cfg
+**.cnt
+**.dcu
+**.dof
+**.dsm
+**.dsk
+**.exe
+**.GID
+**.lps
+Help/Delphi/onguard.kwf
