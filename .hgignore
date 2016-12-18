@@ -15,3 +15,6 @@ syntax: glob
 **.GID
 **.lps
 Help/Delphi/onguard.kwf
+**.local
+**.identcache
+**.stat
