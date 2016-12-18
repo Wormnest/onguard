@@ -51,13 +51,13 @@ interface
 uses
   Controls,
   Forms,
-  OnGuard,
-{$IFDEF VERSION6}                                                      {!!.11}
+{$IFDEF VERSION6}
   DesignIntf,
-  DesignEditors;
+  DesignEditors,
 {$ELSE}
-  dsgnintf;
+  dsgnintf,
 {$ENDIF}
+  OnGuard;                                                             {!!.11}
 
 
 type

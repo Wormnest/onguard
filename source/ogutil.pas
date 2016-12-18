@@ -411,7 +411,12 @@ function OgFormatDate(Value : TDateTime) : string;
 var
   S : string;
 begin
+  {$IF CompilerVersion >= 22}
+    // Starting with VER220 = CompilerVersion 22 = XE FormatSettings is defined.
+  S := FormatSettings.ShortDateFormat;
+  {$ELSE}
   S := ShortDateFormat;
+  {$ENDIF}
   if Pos('yyyy', S) = 0 then
     Insert('yy', S, Pos('yy', S));
   if Pos('MMM', S) > 0 then

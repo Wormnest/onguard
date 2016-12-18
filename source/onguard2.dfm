@@ -1,37 +1,37 @@
 object CodeGenerateFrm: TCodeGenerateFrm
   Left = 334
-  Height = 419
   Top = 148
-  Width = 464
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Code Generation'
   ClientHeight = 419
   ClientWidth = 464
   Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = True
+  Position = poScreenCenter
   OnCreate = FormCreate
   OnShow = FormShow
-  Position = poScreenCenter
-  LCLVersion = '1.4.1.0'
+  PixelsPerInch = 96
+  TextHeight = 13
   object GenerateGb: TGroupBox
     Left = 4
-    Height = 49
     Top = 332
     Width = 457
+    Height = 49
     Caption = 'Generate Code'
-    ClientHeight = 31
-    ClientWidth = 453
     TabOrder = 1
     TabStop = True
     object RegCodeCopySb: TSpeedButton
       Left = 422
-      Height = 23
-      Hint = 'Copy code to clipboard'
       Top = 17
       Width = 23
+      Height = 23
+      Hint = 'Copy code to clipboard'
       Glyph.Data = {
         76050000424D7605000000000000360400002800000012000000100000000100
         0800000000004001000000000000000000000001000000010000000000000000
@@ -76,74 +76,72 @@ object CodeGenerateFrm: TCodeGenerateFrm
         FA030808000F00000F000404040404040808080800A00808000F0F0F0F000F00
         0808080808080808AE810808000F0F0F0F000008080808080808080800040808
         0000000000000808080808080808080881000808080808080808080808080808
-        0808080800A0080808080808080808080808080808080808AE81
-      }
+        0808080800A0080808080808080808080808080808080808AE81}
       OnClick = RegCodeCopySbClick
     end
     object GenerateBtn: TButton
       Left = 8
-      Height = 25
-      Hint = 'Generate code'
       Top = 16
       Width = 77
+      Height = 25
+      Hint = 'Generate code'
       Caption = '&Generate'
       Default = True
-      OnClick = GenerateBtnClick
       TabOrder = 0
+      OnClick = GenerateBtnClick
     end
     object RegCodeEd: TEdit
       Left = 96
-      Height = 21
       Top = 18
       Width = 323
-      OnChange = InfoChanged
+      Height = 21
       ParentColor = True
       ReadOnly = True
       TabOrder = 1
+      OnChange = InfoChanged
     end
   end
   object OKBtn: TBitBtn
     Left = 307
-    Height = 25
     Top = 389
     Width = 75
+    Height = 25
     Caption = 'OK'
     ModalResult = 1
-    OnClick = ParametersChanged
     TabOrder = 2
+    OnClick = ParametersChanged
   end
   object CancelBtn: TBitBtn
     Left = 386
-    Height = 25
     Top = 389
     Width = 75
+    Height = 25
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 3
   end
   object GroupBox1: TGroupBox
     Left = 4
-    Height = 193
     Top = 136
     Width = 457
+    Height = 193
     Caption = '&Key used to encode'
-    ClientHeight = 175
-    ClientWidth = 453
     TabOrder = 0
     object Label5: TLabel
       Left = 12
-      Height = 13
       Top = 148
       Width = 21
+      Height = 13
       Caption = 'Key:'
+      Color = clBtnFace
       ParentColor = False
     end
     object GenerateKeySb: TSpeedButton
       Left = 426
-      Height = 23
-      Hint = 'Generate key'
       Top = 163
       Width = 23
+      Height = 23
+      Hint = 'Generate key'
       Glyph.Data = {
         76050000424D7605000000000000360400002800000012000000100000000100
         0800000000004001000000000000000000000001000000010000000000000000
@@ -188,217 +186,215 @@ object CodeGenerateFrm: TCodeGenerateFrm
         0200080808000000000008080808080808080808340108080808000000080808
         0808080808080808060008080808080808080808080808080808080808000808
         08080808080808080808080808080808D2020808080808080808080808080808
-        08080808D2020808080808080808080808080808080808080200
-      }
+        08080808D2020808080808080808080808080808080808080200}
       OnClick = GenerateKeySbClick
     end
     object Label1: TLabel
       Left = 8
-      Height = 13
       Top = 107
       Width = 40
+      Height = 13
       Caption = 'Modifier:'
+      Color = clBtnFace
       ParentColor = False
     end
     object UniqueModifierCb: TCheckBox
       Left = 304
-      Height = 19
       Top = 16
       Width = 93
+      Height = 19
       Caption = 'Unique modifier'
-      OnClick = ModifierClick
       TabOrder = 3
+      OnClick = ModifierClick
     end
     object MachineModifierCb: TCheckBox
       Left = 152
-      Height = 19
       Top = 16
       Width = 100
+      Height = 19
       Caption = 'Machine modifier'
-      OnClick = ModifierClick
       TabOrder = 1
+      OnClick = ModifierClick
     end
     object DateModifierCb: TCheckBox
       Left = 16
-      Height = 19
       Top = 48
       Width = 82
+      Height = 19
       Caption = 'Date modifier'
-      OnClick = ModifierClick
       TabOrder = 2
+      OnClick = ModifierClick
     end
     object NoModifierCb: TCheckBox
       Left = 16
-      Height = 19
       Top = 16
       Width = 73
+      Height = 19
       Caption = 'No modifier'
       Checked = True
-      OnClick = ModifierClick
       State = cbChecked
       TabOrder = 0
+      OnClick = ModifierClick
     end
     object ModifierEd: TEdit
       Left = 8
-      Height = 21
       Top = 124
       Width = 169
+      Height = 21
       Color = clBtnFace
-      OnChange = ParametersChanged
-      OnKeyPress = ModifierEdKeyPress
       ReadOnly = True
       TabOrder = 5
+      OnChange = ParametersChanged
+      OnKeyPress = ModifierEdKeyPress
     end
     object ModDateEd: TEdit
       Left = 111
-      Height = 21
-      Hint = 'Code is invalid after this date'
       Top = 45
       Width = 77
+      Height = 21
+      Hint = 'Code is invalid after this date'
       Color = clBtnFace
       Enabled = False
       MaxLength = 10
+      TabOrder = 4
       OnChange = ModifierClick
       OnKeyPress = DateEdKeyPress
-      TabOrder = 4
     end
     object BlockKeyEd: TEdit
       Left = 8
-      Height = 21
       Top = 164
       Width = 415
+      Height = 21
       Color = clBtnFace
-      OnChange = InfoChanged
       ReadOnly = True
       TabOrder = 6
+      OnChange = InfoChanged
     end
     object StringModifierCb: TCheckBox
       Left = 16
-      Height = 19
       Top = 72
       Width = 87
+      Height = 19
       Caption = 'String Modifier'
-      OnClick = ModifierClick
       TabOrder = 7
+      OnClick = ModifierClick
     end
     object ModStringEd: TEdit
       Left = 111
-      Height = 21
-      Hint = 'Code is invalid after this date'
       Top = 69
       Width = 312
+      Height = 21
+      Hint = 'Code is invalid after this date'
       Color = clBtnFace
       Enabled = False
-      OnChange = ModifierClick
       TabOrder = 8
+      OnChange = ModifierClick
     end
   end
   object CodesNbk: TPageControl
     Left = 0
-    Height = 129
     Top = 0
     Width = 465
+    Height = 129
     ActivePage = TabSheet1
-    TabIndex = 0
     TabOrder = 4
     OnChange = CodesNbkChange
     object TabSheet1: TTabSheet
       Caption = 'Date'
-      ClientHeight = 103
-      ClientWidth = 457
       object Label9: TLabel
         Left = 4
-        Height = 13
         Top = 12
         Width = 49
+        Height = 13
         Caption = 'Start date:'
+        Color = clBtnFace
         ParentColor = False
       end
       object Label11: TLabel
         Left = 204
-        Height = 13
         Top = 12
         Width = 46
+        Height = 13
         Caption = 'End date:'
+        Color = clBtnFace
         ParentColor = False
       end
       object StartDateEd: TEdit
         Left = 60
-        Height = 21
-        Hint = 'Code is invalid prior to this date'
         Top = 8
         Width = 77
+        Height = 21
+        Hint = 'Code is invalid prior to this date'
         MaxLength = 10
         TabOrder = 0
       end
       object EndDateEd: TEdit
         Left = 260
-        Height = 21
-        Hint = 'Code is invalid after this date'
         Top = 8
         Width = 77
+        Height = 21
+        Hint = 'Code is invalid after this date'
         MaxLength = 10
         TabOrder = 1
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'Days'
-      ClientHeight = 0
-      ClientWidth = 0
       ImageIndex = 1
       object Label13: TLabel
         Left = 4
-        Height = 13
         Top = 12
         Width = 52
+        Height = 13
         Caption = 'Day count:'
+        Color = clBtnFace
         ParentColor = False
       end
       object Label2: TLabel
         Left = 228
-        Height = 13
         Top = 12
         Width = 37
+        Height = 13
         Caption = 'Expires:'
+        Color = clBtnFace
         ParentColor = False
       end
       object DaysCountEd: TEdit
         Left = 64
-        Height = 21
         Top = 8
         Width = 113
+        Height = 21
         TabOrder = 0
         Text = '0'
       end
       object DaysExpiresEd: TEdit
         Left = 272
-        Height = 21
-        Hint = 'Code is invalid prior to this date'
         Top = 8
         Width = 77
+        Height = 21
+        Hint = 'Code is invalid prior to this date'
         MaxLength = 10
         TabOrder = 1
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Reg'
-      ClientHeight = 0
-      ClientWidth = 0
       ImageIndex = 2
       object Label6: TLabel
         Left = 8
-        Height = 13
         Top = 12
         Width = 30
+        Height = 13
         Caption = 'String:'
+        Color = clBtnFace
         ParentColor = False
       end
       object RegStrCopySb: TSpeedButton
         Left = 410
-        Height = 23
-        Hint = 'Copy to clipboard'
         Top = 7
         Width = 23
+        Height = 23
+        Hint = 'Copy to clipboard'
         Glyph.Data = {
           76050000424D7605000000000000360400002800000012000000100000000100
           0800000000004001000000000000000000000001000000010000000000000000
@@ -443,185 +439,184 @@ object CodeGenerateFrm: TCodeGenerateFrm
           C0030808000F00000F0004040404040408080808E0010808000F0F0F0F000F00
           0808080808080808FFFF0808000F0F0F0F0000080808080808080808FFFF0808
           00000000000008080808080808080808F7810808080808080808080808080808
-          08080808C00708080808080808080808080808080808080898C3
-        }
+          08080808C00708080808080808080808080808080808080898C3}
       end
       object Label4: TLabel
         Left = 228
-        Height = 13
         Top = 40
         Width = 37
+        Height = 13
         Caption = 'Expires:'
+        Color = clBtnFace
         ParentColor = False
       end
       object RegStrEd: TEdit
         Left = 44
-        Height = 21
         Top = 8
         Width = 365
+        Height = 21
         TabOrder = 0
       end
       object RegRandomBtn: TButton
         Left = 48
-        Height = 25
         Top = 36
         Width = 109
+        Height = 25
         Caption = '&Random Number'
         TabOrder = 1
       end
       object RegExpiresEd: TEdit
         Left = 269
-        Height = 21
-        Hint = 'Code is invalid prior to this date'
         Top = 36
         Width = 77
+        Height = 21
+        Hint = 'Code is invalid prior to this date'
         MaxLength = 10
         TabOrder = 2
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'S/N'
-      ClientHeight = 0
-      ClientWidth = 0
       ImageIndex = 3
       object Label7: TLabel
         Left = 8
-        Height = 13
         Top = 12
         Width = 69
+        Height = 13
         Caption = '&Serial Number:'
+        Color = clBtnFace
         ParentColor = False
       end
       object Label15: TLabel
         Left = 228
-        Height = 13
         Top = 12
         Width = 37
+        Height = 13
         Caption = 'Expires:'
+        Color = clBtnFace
         ParentColor = False
       end
       object SerialNumberEd: TEdit
         Left = 84
-        Height = 21
         Top = 8
         Width = 105
+        Height = 21
         TabOrder = 0
         Text = '0'
       end
       object SerialExpiresEd: TEdit
         Left = 272
-        Height = 21
-        Hint = 'Code is invalid prior to this date'
         Top = 8
         Width = 77
+        Height = 21
+        Hint = 'Code is invalid prior to this date'
         MaxLength = 10
         TabOrder = 1
       end
       object SerRandomBtn: TButton
         Left = 8
-        Height = 25
         Top = 36
         Width = 109
+        Height = 25
         Caption = '&Random Number'
         TabOrder = 2
       end
     end
     object TabSheet5: TTabSheet
       Caption = 'Usage'
-      ClientHeight = 0
-      ClientWidth = 0
       ImageIndex = 4
       object Label14: TLabel
         Left = 4
-        Height = 13
         Top = 12
         Width = 64
+        Height = 13
         Caption = 'Usage count:'
+        Color = clBtnFace
         ParentColor = False
       end
       object Label17: TLabel
         Left = 228
-        Height = 13
         Top = 12
         Width = 37
+        Height = 13
         Caption = 'Expires:'
+        Color = clBtnFace
         ParentColor = False
       end
       object UsageCountEd: TEdit
         Left = 76
-        Height = 21
         Top = 8
         Width = 113
+        Height = 21
         TabOrder = 0
         Text = '0'
       end
       object UsageExpiresEd: TEdit
         Left = 272
-        Height = 21
-        Hint = 'Code is invalid prior to this date'
         Top = 8
         Width = 77
+        Height = 21
+        Hint = 'Code is invalid prior to this date'
         MaxLength = 10
         TabOrder = 1
       end
     end
     object TabSheet6: TTabSheet
       Caption = 'Network'
-      ClientHeight = 0
-      ClientWidth = 0
       ImageIndex = 5
       object Label10: TLabel
         Left = 4
-        Height = 13
         Top = 12
         Width = 64
+        Height = 13
         Caption = 'Access Slots:'
+        Color = clBtnFace
         ParentColor = False
       end
       object NetworkSlotsEd: TEdit
         Left = 76
-        Height = 21
         Top = 8
         Width = 113
+        Height = 21
         TabOrder = 0
         Text = '2'
       end
     end
     object TabSheet7: TTabSheet
       Caption = 'Special'
-      ClientHeight = 0
-      ClientWidth = 0
       ImageIndex = 6
       object Label12: TLabel
         Left = 4
-        Height = 13
         Top = 12
         Width = 62
+        Height = 13
         Caption = 'Special data:'
+        Color = clBtnFace
         ParentColor = False
       end
       object Label19: TLabel
         Left = 228
-        Height = 13
         Top = 12
         Width = 37
+        Height = 13
         Caption = 'Expires:'
+        Color = clBtnFace
         ParentColor = False
       end
       object SpecialDataEd: TEdit
         Left = 72
-        Height = 21
         Top = 8
         Width = 113
+        Height = 21
         TabOrder = 0
         Text = '0'
       end
       object SpecialExpiresEd: TEdit
         Left = 272
-        Height = 21
-        Hint = 'Code is invalid prior to this date'
         Top = 8
         Width = 77
+        Height = 21
+        Hint = 'Code is invalid prior to this date'
         MaxLength = 10
         TabOrder = 1
       end

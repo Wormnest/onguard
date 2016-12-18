@@ -86,7 +86,7 @@ end;
 procedure ActivateFirstInstance;
 var
   ClassBuf,
-  WindowBuf : array [0..255] of AnsiChar;
+  WindowBuf : array [0..255] of Char;
   Wnd,
   TopWnd    : hWnd;
   ThreadID  : DWord;                                                 {!!.07}
@@ -185,7 +185,7 @@ end;
 {$IFDEF Win32}
 function GetMutexName : string;
 var
-  WindowBuf : array [0..512] of AnsiChar;
+  WindowBuf : array [0..512] of Char;
 begin
   {$IFNDEF FPC}
   GetWindowText(Application.Handle, WindowBuf, SizeOf(WindowBuf));
@@ -196,7 +196,7 @@ begin
 end;
 
 initialization
-  InstanceMutex := CreateMutex(nil, True, PAnsiChar(GetMutexName));
+  InstanceMutex := CreateMutex(nil, True, PChar(GetMutexName));
   if (InstanceMutex <> 0) and (GetLastError = 0) then
     FirstInstance := True
   else

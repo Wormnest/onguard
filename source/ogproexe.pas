@@ -254,7 +254,7 @@ var
   FileMap : THandle;
   Memory  : PByteArray;
   CRC     : DWord;                                                   {!!.07}
-  Buf     : array [0..MAX_PATH - 1] of AnsiChar;
+  Buf     : array [0..MAX_PATH - 1] of Char;
 begin
   Result := exeIntegrityError;
 
@@ -372,7 +372,7 @@ var
 begin
   Result := False;
 
-  Fh := CreateFile(PAnsiChar(FileName), GENERIC_READ or GENERIC_WRITE, 0,
+  Fh := CreateFile(PChar(FileName), GENERIC_READ or GENERIC_WRITE, 0,
     nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
   if (Fh <> INVALID_HANDLE_VALUE) then begin
     Size := Windows.GetFileSize(Fh, nil);
@@ -527,7 +527,7 @@ var
 begin
   Result := False;
 
-  Fh := CreateFile(PAnsiChar(FileName), GENERIC_READ or GENERIC_WRITE, 0,
+  Fh := CreateFile(PChar(FileName), GENERIC_READ or GENERIC_WRITE, 0,
     nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
   if (Fh <> INVALID_HANDLE_VALUE) then begin
     Size := Windows.GetFileSize(Fh, nil);
@@ -653,7 +653,7 @@ var
   FileMap : THandle;
   Size    : LongInt;
   Memory  : PByteArray;
-  Buf     : array [0..MAX_PATH - 1] of AnsiChar;
+  Buf     : array [0..MAX_PATH - 1] of Char;
 begin
   Result := $FFFFFFFF;                                               {!!.07}
   StrPLCopy(Buf, FileName, SizeOf(Buf)-1);

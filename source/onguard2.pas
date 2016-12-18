@@ -185,7 +185,11 @@ var
   D : TDateTime;
 begin
   NoModifierCb.Checked := True;
+  {$IFDEF FPC}
   CodesNbk.PageIndex := Ord(FCodeType);
+  {$ELSE}
+  CodesNbk.TabIndex := Ord(FCodeType);
+  {$ENDIF}
   BlockKeyEd.Text := BufferToHex(FKey, SizeOf(FKey));
   if HexStringIsZero(BlockKeyEd.Text)then
     BlockKeyEd.Text := '';
@@ -333,7 +337,11 @@ begin
     K := FKey;
     ApplyModifierToKeyPrim(Modifier, K, SizeOf(K));
 
+    {$IFDEF FPC}
     case CodesNbk.PageIndex of
+    {$ELSE}
+    case CodesNbk.TabIndex of
+    {$ENDIF}
       0 : begin
             try
               D1 := StrToDate(StartDateEd.Text);
@@ -480,7 +488,12 @@ end;
 {!!.04}
 procedure TCodeGenerateFrm.DateEdKeyPress(Sender: TObject; var Key: Char);
 begin
+{$IF CompilerVersion >= 22}
+  // Starting with VER220 = CompilerVersion 22 = XE FormatSettings is defined.
+  if (not (Key in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', FormatSettings.DateSeparator])) and (not (Key < #32)) then begin
+{$ELSE}
   if (not (Key in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', DateSeparator])) and (not (Key < #32)) then begin
+{$ENDIF}
     MessageBeep(0);
     Key := #0;
   end;
@@ -565,10 +578,17 @@ end;
 
 procedure TCodeGenerateFrm.SetCodeType(Value : TCodeType);
 begin
+{$IFDEF FPC}
   if Value <> TCodeType(CodesNbk.PageIndex) then begin
     FCodeType := Value;
     CodesNbk.PageIndex := Ord(FCodeType);
   end;
+{$ELSE}
+  if Value <> TCodeType(CodesNbk.TabIndex) then begin
+    FCodeType := Value;
+    CodesNbk.TabIndex := Ord(FCodeType);
+  end;
+{$ENDIF}
 end;
 
 procedure TCodeGenerateFrm.SetKey(Value : TKey);

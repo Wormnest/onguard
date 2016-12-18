@@ -690,8 +690,14 @@ begin
 end;
 
 function StringHashElf(const Str : string) : LongInt;
+var hash_str: AnsiString;
 begin
-  Result := HashElf(Str[1], Length(Str));
+  // We need to work with AnsiStrings to get correct hashes
+  // so we convert to AnsiString first and determine hash of that.
+  // NB. this assumes the string can be converted to ansi,
+  // eventually we need to change this in a better Unicode aware manner.
+  hash_str := AnsiString(Str);
+  Result := HashElf(hash_str[1], Length(hash_str));
 end;
 
 {internal routines for MD5}
@@ -1186,11 +1192,11 @@ begin
     {include drive specific information}
     for Drive := 'C' to 'Z' do begin
 
-      if (GetDriveType(PAnsiChar(Drive + ':\')) = DRIVE_FIXED) then begin
+      if (GetDriveType(PChar(Drive + ':\')) = DRIVE_FIXED) then begin
         FillChar(Buf, Sizeof(Buf), 0);
         Buf[0] := Byte(Drive);
         {!!.16} {removed cluster information}
-        GetVolumeInformation(PAnsiChar(Drive + ':\'), nil, 0,
+        GetVolumeInformation(PChar(Drive + ':\'), nil, 0,
           PDWord(@Buf[1]){serial number}, I{not used}, I{not used}, nil, 0);
         UpdateTMD(Context, Buf, 5);
       end;
