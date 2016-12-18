@@ -91,6 +91,11 @@
  {$ENDIF}
 {$ENDIF}
 
+{$IF CompilerVersion > 6}
+  {$DEFINE VERSION6}          { Version 6 or greater }
+  {$DEFINE VERSION7}
+{$ENDIF}
+
 {$IFDEF CBuilder)
   {$A+} {Word Align Data}
 {$ELSE}
