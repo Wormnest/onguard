@@ -3,10 +3,10 @@
         <ProjectGuid>{643AA4D2-9664-4379-8B25-4BBCC264FA24}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="G113_R240.dproj">
+        <Projects Include="G113_R260.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="G113_D240.dproj">
+        <Projects Include="G113_D260.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -17,32 +17,32 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="G113_R240">
-        <MSBuild Projects="G113_R240.dproj"/>
+    <Target Name="G113_R260">
+        <MSBuild Projects="G113_R260.dproj"/>
     </Target>
-    <Target Name="G113_R240:Clean">
-        <MSBuild Projects="G113_R240.dproj" Targets="Clean"/>
+    <Target Name="G113_R260:Clean">
+        <MSBuild Projects="G113_R260.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="G113_R240:Make">
-        <MSBuild Projects="G113_R240.dproj" Targets="Make"/>
+    <Target Name="G113_R260:Make">
+        <MSBuild Projects="G113_R260.dproj" Targets="Make"/>
     </Target>
-    <Target Name="G113_D240">
-        <MSBuild Projects="G113_D240.dproj"/>
+    <Target Name="G113_D260">
+        <MSBuild Projects="G113_D260.dproj"/>
     </Target>
-    <Target Name="G113_D240:Clean">
-        <MSBuild Projects="G113_D240.dproj" Targets="Clean"/>
+    <Target Name="G113_D260:Clean">
+        <MSBuild Projects="G113_D260.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="G113_D240:Make">
-        <MSBuild Projects="G113_D240.dproj" Targets="Make"/>
+    <Target Name="G113_D260:Make">
+        <MSBuild Projects="G113_D260.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="G113_R240;G113_D240"/>
+        <CallTarget Targets="G113_R260;G113_D260"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="G113_R240:Clean;G113_D240:Clean"/>
+        <CallTarget Targets="G113_R260:Clean;G113_D260:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="G113_R240:Make;G113_D240:Make"/>
+        <CallTarget Targets="G113_R260:Make;G113_D260:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
