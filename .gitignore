@@ -18,3 +18,5 @@ Help/Delphi/onguard.kwf
 **.local
 **.identcache
 **.stat
+*.prjmgc
+*.tvsconfig
