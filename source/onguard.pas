@@ -37,13 +37,7 @@
 {$W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFNDEF Win32}
-  {$G+} {286 Instructions}
-  {$N+} {Numeric Coprocessor}
-  {$C MOVEABLE,DEMANDLOAD,DISCARDABLE}
-{$ELSE}
-  {$J+} {Assignable Typed Constants}                                   {!!.11}
-{$ENDIF}
+{$J+} {Assignable Typed Constants}                                   {!!.11}
 
 unit OnGuard;
   {-code and key classes and routines}
@@ -51,7 +45,7 @@ unit OnGuard;
 interface
 
 uses
-  {$IFDEF Win32} Windows, {$ELSE} WinTypes, WinProcs, {$ENDIF}
+  Windows,
   Classes, Controls, SysUtils,
   OgConst,
   OgUtil;
@@ -717,19 +711,10 @@ asm
   rol  eax, cl          {rotate eax by cl}
 end;
 {$ELSE}
-function RolX(I, C : DWord) : DWord; assembler;                        {!!.07}
-asm
-  db $66
-  mov  ax,word ptr I    {eax = I}
-  db $66
-  mov  cx,word ptr C    {ecx = C}
-  db $66
-  rol  ax, cl           {rotate eax by cl}
-  db $66
-  push ax               {push eax}
-  {set result}
-  pop  ax               {low word to ax}
-  pop  dx               {high word to dx}
+// Taken from https://github.com/TurboPack/OnGuard-VCL/blob/master/source/VCL.ogutil.pas
+function RolX(I,C: DWord): DWord;
+begin
+  Result := (I shl C) or (I shr (32-C));
 end;
 {$ENDIF}
 
@@ -1084,7 +1069,6 @@ begin
   FinalizeTMD(Context, Digest, DigestSize);
 end;
 
-{$IFDEF Win32}
 {!!.05} {added}
 function CreateMachineID(MachineInfo : TEsMachineInfoSet) : LongInt;
 { Obtains information from:
@@ -1205,63 +1189,6 @@ begin
 
   FinalizeTMD(Context, Result, SizeOf(Result));
 end;
-{$ELSE}
-function CreateMachineID(MachineInfo : TEsMachineInfoSet) : LongInt;
-var
-  I       : DWord;
-  RegKey  : DWord;
-  GUID1   : TGUID;
-  GUID2   : TGUID;
-  Drive   : Integer;
-  Context : TTMDContext;
-  Buf     : array [0..1023] of Byte;
-begin
-  InitTMD(Context);
-
-  {no user (midUser) information under Win16}
-
-  if midSystem in MachineInfo then begin
-    {include system specific information}
-    I := GetWindowsDirectory(@Buf, SizeOf(Buf));
-    UpdateTMD(Context, Buf, I);
-    I := GetSystemDirectory(@Buf, SizeOf(Buf));
-    UpdateTMD(Context, Buf, I);
-
-    PLongInt(@Buf[0])^ := GetWinFlags;
-    PLongInt(@Buf[4])^ := WinProcs.GetVersion;
-    UpdateTMD(Context, Buf, 8);
-  end;
-
-  if midNetwork in MachineInfo then begin
-    {include network ID}
-    CoCreateGuid(GUID1);
-    CoCreateGuid(GUID2);
-    {check to see if "network" ID is available}
-    if (GUID1.Data4[2] = GUID2.Data4[2]) and
-       (GUID1.Data4[3] = GUID2.Data4[3]) and
-       (GUID1.Data4[4] = GUID2.Data4[4]) and
-       (GUID1.Data4[5] = GUID2.Data4[5]) and
-       (GUID1.Data4[6] = GUID2.Data4[6]) and
-       (GUID1.Data4[7] = GUID2.Data4[7]) then
-      UpdateTMD(Context, GUID1.Data4[2], 6);
-  end;
-
-  if midDrives in MachineInfo then begin
-    {include drive specific information}
-    for Drive := 2 {C} to 25 {Z} do begin
-      if GetDriveType(Drive) = DRIVE_FIXED then begin
-        FillChar(Buf, Sizeof(Buf), 0);
-        Buf[0] := Drive;
-        {!!.06} {removed cluster information}
-        PLongInt(@Buf[1])^ := GetDiskSerialNumber(Chr(Drive+Ord('A')));{!!.06}
-        UpdateTMD(Context, Buf, 5);
-      end;
-    end;
-  end;
-
-  FinalizeTMD(Context, Result, SizeOf(Result));
-end;
-{$ENDIF}
 
 {key generation routines }
 procedure GenerateRandomKeyPrim(var Key; KeySize: Cardinal);

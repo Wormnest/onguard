@@ -37,20 +37,13 @@
 {$W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFNDEF Win32}
-{$G+} {286 Instructions}
-{$N+} {Numeric Coprocessor}
-
-{$C MOVEABLE,DEMANDLOAD,DISCARDABLE}
-{$ENDIF}
-
 unit OgFirst;
   {-limit instance routines}
 
 interface
 
 uses
-  {$IFDEF Win32} Windows, {$ELSE} WinTypes, WinProcs, {$ENDIF}
+  Windows,
   Forms, SysUtils,
   OgUtil;
 
@@ -66,23 +59,16 @@ implementation
 uses InterfaceBase;
 {$ENDIF}
 
-{$IFDEF Win32}
 var
   FirstInstance : Boolean;
   InstanceMutex : THandle;
-{$ENDIF}
 
 {limit instances routines}
 function IsFirstInstance : Boolean;
 begin
-  {$IFDEF Win32}
   Result := FirstInstance;
-  {$ELSE}
-  Result := HPrevInst = 0;
-  {$ENDIF}
 end;
 
-{$IFDEF Win32}
 procedure ActivateFirstInstance;
 var
   ClassBuf,
@@ -129,60 +115,7 @@ begin
     end;
   end;
 end;
-{$ELSE}
 
-type
-  PHWND = ^hWnd;
-
-function EnumWndFunc(Wnd : hWnd; Target : PHWND) : Boolean; export;    {!!.07}
-var
-  Buf : array[0..255] of Char;
-begin
-  Result := True;
-  if GetWindowWord(Wnd, GWW_HINSTANCE) = HPrevInst then begin
-    GetClassName(Wnd, Buf, SizeOf(Buf)-1);
-    {find our application window}
-    if StrIComp(Buf, 'TApplication') = 0 then begin
-      Target^ := Wnd;
-      Result := False;
-    end;
-  end;
-end;
-
-procedure ActivateFirstInstance;
-var
-  Wnd    : hWnd;
-  TopWnd : hWnd;
-begin
-  if IsFirstInstance then begin
-    if IsIconic(Application.Handle) then
-      Application.Restore
-    else
-      Application.BringToFront;
-  end else begin
-    Wnd := 0;
-    EnumWindows(@EnumWndFunc, LongInt(@Wnd));
-    if Wnd <> 0 then begin
-      if IsIconic(Wnd) then
-        ShowWindow(Wnd, SW_RESTORE)
-      else begin
-        TopWnd := GetLastActivePopup(Wnd);
-        if (TopWnd <> 0) and (TopWnd <> Wnd) and IsWindowVisible(TopWnd) and IsWindowEnabled(TopWnd) then begin
-          ShowWindow(TopWnd, SW_SHOWNORMAL);
-          SetFocus(TopWnd);
-        end else begin
-          ShowWindow(Wnd, SW_SHOWNORMAL);
-          BringWindowToTop(Wnd);
-          ShowOwnedPopups(Wnd, True);
-          SetFocus(Wnd);
-        end;
-      end;
-    end;
-  end;
-end;
-{$ENDIF}
-
-{$IFDEF Win32}
 function GetMutexName : string;
 var
   WindowBuf : array [0..512] of Char;
@@ -205,6 +138,4 @@ initialization
 finalization
   if (InstanceMutex <> 0) then
     CloseHandle(InstanceMutex);
-{$ENDIF}
-
 end.

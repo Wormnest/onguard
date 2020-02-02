@@ -37,21 +37,10 @@
 {$W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFNDEF Win32}
-{$G+} {286 Instructions}
-{$N+} {Numeric Coprocessor}
-
-{$C MOVEABLE,DEMANDLOAD,DISCARDABLE}
-{$ENDIF}
-
 unit OgConst;
   {-Resource constants}
 
-{$IFDEF Win32}
-  {$R OGCONST.R32}
-{$ELSE}
-  {$R OGCONST.R16}
-{$ENDIF}
+{$R OGCONST.R32}
 
 interface
 

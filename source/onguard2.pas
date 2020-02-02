@@ -37,13 +37,7 @@
 {$W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFNDEF Win32}
-  {$G+} {286 Instructions}
-  {$N+} {Numeric Coprocessor}
-  {$C MOVEABLE,DEMANDLOAD,DISCARDABLE}
-{$ELSE}
-  {$J+} {Assignable Typed Constants}                                   {!!.11}
-{$ENDIF}
+{$J+} {Assignable Typed Constants}                                   {!!.11}
 
 unit OnGuard2;
   {-Code generation dialog}
@@ -51,7 +45,7 @@ unit OnGuard2;
 interface
 
 uses
-  {$IFDEF Win32} Windows, ComCtrls, {$ELSE} WinTypes, WinProcs, {$ENDIF}
+  Windows, ComCtrls,
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   {$IFNDEF FPC}Mask,{$ELSE}MaskEdit,{$ENDIF}
   ExtCtrls, StdCtrls, Buttons, Messages,

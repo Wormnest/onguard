@@ -301,6 +301,10 @@ object CodeGenerateFrm: TCodeGenerateFrm
     OnChange = CodesNbkChange
     object TabSheet1: TTabSheet
       Caption = 'Date'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label9: TLabel
         Left = 4
         Top = 12
@@ -341,6 +345,10 @@ object CodeGenerateFrm: TCodeGenerateFrm
     object TabSheet2: TTabSheet
       Caption = 'Days'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label13: TLabel
         Left = 4
         Top = 12
@@ -380,6 +388,10 @@ object CodeGenerateFrm: TCodeGenerateFrm
     object TabSheet3: TTabSheet
       Caption = 'Reg'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label6: TLabel
         Left = 8
         Top = 12
@@ -478,6 +490,10 @@ object CodeGenerateFrm: TCodeGenerateFrm
     object TabSheet4: TTabSheet
       Caption = 'S/N'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label7: TLabel
         Left = 8
         Top = 12
@@ -525,6 +541,10 @@ object CodeGenerateFrm: TCodeGenerateFrm
     object TabSheet5: TTabSheet
       Caption = 'Usage'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label14: TLabel
         Left = 4
         Top = 12
@@ -564,6 +584,10 @@ object CodeGenerateFrm: TCodeGenerateFrm
     object TabSheet6: TTabSheet
       Caption = 'Network'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label10: TLabel
         Left = 4
         Top = 12
@@ -585,6 +609,10 @@ object CodeGenerateFrm: TCodeGenerateFrm
     object TabSheet7: TTabSheet
       Caption = 'Special'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label12: TLabel
         Left = 4
         Top = 12

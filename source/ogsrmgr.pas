@@ -79,24 +79,12 @@ Notes:
   --------------------------------------------------------------------
 }
 
-{$IFDEF Win32}
-  {include the resource compiled using BRCC32.EXE and SRMC.EXE}
-  {$R OGSRMGR.R32}
-{$ELSE}
-  {include the resource compiled using BRCC.EXE and SRMC.EXE}
-  {$R OGSRMGR.R16}
-{$ENDIF}
+{include the resource compiled using BRCC32.EXE and SRMC.EXE}
+{$R OGSRMGR.R32}
 
 {$R-,S-,I-}
 
-{$IFDEF Win32}
-  {$H+} {Long strings}                                                 {!!.02}
-{$ENDIF}
-
-{For BCB 3.0 package support.}
-{$IFDEF VER110}
-  {$ObjExportAll On}
-{$ENDIF}
+{$H+} {Long strings}                                                 {!!.02}
 
 {$IFNDEF VER80}   {Delphi 1}
  {$IFNDEF VER90}  {Delphi 2}
@@ -111,7 +99,7 @@ unit OgSrMgr;
 interface
 
 uses
-  {$IFDEF WIN32} Windows, {$ELSE} WinProcs, WinTypes, {$ENDIF}
+  Windows,
   Classes, SysUtils;
 
 const
@@ -123,11 +111,7 @@ const
 type
   ETpsStringResourceError = class(Exception);
 
-{$IFDEF Win32}
   TInt32 = Integer;
-{$ELSE}
-  TInt32 = LongInt;
-{$ENDIF}
 
   PIndexRec = ^TIndexRec;
   TIndexRec = record
@@ -171,9 +155,7 @@ type
     function GetString(Ident : TInt32) : string;
     property Strings[Ident : TInt32] : string
       read GetString; default;
-{$IFDEF Win32}
     function GetWideChar(Ident : TInt32; Buffer : PWideChar; BufChars : Integer) : PWideChar;
-{$ENDIF}
 
     property ReportError : Boolean
       read FReportError
@@ -209,7 +191,6 @@ begin
   inherited Destroy;
 end;
 
-{$IFDEF Win32}
 procedure WideCopy(Dest, Src : PWideChar; Len : Integer);
 begin
   while Len > 0 do begin
@@ -307,59 +288,6 @@ begin
     srUnLock;
   end;
 end;
-
-{$ELSE}
-
-function TOgStringResource.GetAsciiZ(Ident : TInt32;
-  Buffer : PAnsiChar; BufChars : Integer) : PAnsiChar;
-var
-  OLen : Integer;
-  P : PIndexRec;
-begin
-  srLock;
-  try
-    P := srFindIdent(Ident);
-    if P = nil then
-      Buffer[0] := #0
-    else begin
-      OLen := P^.len;
-      if OLen >= BufChars then
-        OLen := BufChars-1;
-      StrLCopy(Buffer, PAnsiChar(srP)+P^.ofs, OLen);
-      Buffer[OLen] := #0;
-    end;
-  finally
-    srUnLock;
-  end;
-
-  Result := Buffer;
-end;
-
-function TOgStringResource.GetString(Ident : TInt32) : string;
-var
-  OLen : Integer;
-  Src : PAnsiChar;
-  P : PIndexRec;
-begin
-  srLock;
-  try
-    P := srFindIdent(Ident);
-    if P = nil then
-      Result := ''
-    else begin
-      OLen := P^.len;
-      if OLen > 255 then
-        OLen := 255;
-      Result[0] := AnsiChar(OLen);
-      Src := PAnsiChar(srP)+P^.ofs;
-      move(Src^, Result[1], OLen);
-    end;
-  finally
-    srUnLock;
-  end;
-end;
-
-{$ENDIF}
 
 procedure TOgStringResource.srCloseResource;
 begin
@@ -459,11 +387,6 @@ end;
 initialization
   TpsResStrings := TOgStringResource.Create(HInstance, 'OGSRMGR_STRINGS');{!!.01}
 
-{$IFDEF Win32}
 finalization
   FreeTpsResStrings;
-{$ELSE}
-  AddExitProc(FreeTpsResStrings);
-{$ENDIF}
-
 end.

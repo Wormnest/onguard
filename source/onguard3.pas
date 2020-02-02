@@ -37,20 +37,13 @@
 {$W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFNDEF Win32}
-{$G+} {286 Instructions}
-{$N+} {Numeric Coprocessor}
-
-{$C MOVEABLE,DEMANDLOAD,DISCARDABLE}
-{$ENDIF}
-
 unit OnGuard3;
   {-Key selection and maintenance}
 
 interface
 
 uses
-  {$IFDEF Win32} Windows, {$ELSE} WinTypes, WinProcs, {$ENDIF}
+  Windows,
   SysUtils, Messages, Classes, Graphics, Controls, Clipbrd, IniFiles,
   StdCtrls, Buttons, Forms, Dialogs,
   OgConst,
@@ -248,27 +241,17 @@ procedure TKeyMaintFrm.DeleteBtnClick(Sender: TObject);
 var
   IniFile : TIniFile;
   I       : Integer;
-  {$IFNDEF Win32}
-  Buf1    : array[0..255] of Char;
-  Buf2    : array[0..255] of Char;
-  {$ENDIF}
 begin
   I := GetListBoxItemIndex;                                          {!!.07}
   if (I > -1) then                                                   {!!.07}
     if MessageDlg(StrRes[SCDeleteQuery], mtConfirmation,
        [mbYes, mbNo], 0) = mrYes then begin
-      {$IFDEF Win32}
       IniFile := TIniFile.Create(KeyFileName);
       try
         IniFile.DeleteKey(OgKeySection, ProductsLb.Items[I]);        {!!.07}
       finally
         IniFile.Free;
       end;
-      {$ELSE}
-      StrPLCopy(Buf1, ProductsLb.Items[I], 255);                     {!!.07}
-      StrPLCopy(Buf2, KeyFileName, 255);
-      WritePrivateProfileString(OgKeySection, Buf1, nil, Buf2);
-      {$ENDIF}
       BlockKeyEd.Text := '';
       BytesKeyEd.Text := '';
 

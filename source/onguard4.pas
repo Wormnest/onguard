@@ -37,20 +37,13 @@
 {$W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFNDEF Win32}
-{$G+} {286 Instructions}
-{$N+} {Numeric Coprocessor}
-
-{$C MOVEABLE,DEMANDLOAD,DISCARDABLE}
-{$ENDIF}
-
 unit OnGuard4;
   {-Product description dialog}
 
 interface
 
 uses
-  {$IFDEF Win32} Windows, {$ELSE} WinTypes, WinProcs, {$ENDIF}
+  Windows,
   StdCtrls, Buttons, ExtCtrls, Controls, Classes, Forms,
   OgUtil,
   OnGuard,

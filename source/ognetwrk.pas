@@ -37,20 +37,13 @@
 {$W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFNDEF Win32}
-{$G+} {286 Instructions}
-{$N+} {Numeric Coprocessor}
-
-{$C MOVEABLE,DEMANDLOAD,DISCARDABLE}
-{$ENDIF}
-
 unit OgNetWrk;
   {-network file routines}
 
 interface
 
 uses
-  {$IFDEF Win32} Windows, {$ELSE} WinTypes, WinProcs, {$ENDIF}
+  Windows,
   Classes, SysUtils,
   OgConst,
   OgUtil,
@@ -426,20 +419,10 @@ begin
   end;
 end;
 
-{$IFDEF Win32}
 function IsAppOnNetwork(const ExePath : string) : Boolean;
 begin
   Result := (GetDriveType(PChar(ExtractFileDrive(ExePath) + '\')) = DRIVE_REMOTE);
 end;
-{$ELSE}
-function IsAppOnNetwork(const ExePath : string) : Boolean;
-var
-  D : Integer;
-begin
-  D := Ord(UpCase(ExePath[1])) - Ord('A');                             {!!.07}
-  Result := GetDriveType(D) = DRIVE_REMOTE;
-end;
-{$ENDIF}
 
 function LockNetAccessFile(const FileName : string; const Key : TKey;
                            var NetAccess : TNetAccess) : Boolean;
